@@ -1,3 +1,5 @@
+package sprint0;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,27 +12,22 @@ import java.util.stream.Collectors;
  * @author valeriali on {20.05.2023}
  * @project algirithms
  */
-public class TwoSum2 {
-
+public class TwoSum {
     // Если ответ существует, верните список из двух элементов
     // Если нет - то верните пустой список
     private static List<Integer> twoSum(List<Integer> arr, int targetSum) {
-        int left = 0;
-        int right = arr.size()-1;
-        List<Integer> result = new ArrayList<>();
-        while (left < right) {
-
-            if ((arr.get(left) + arr.get(right)) > targetSum) {
-                right--;
-            } else if ((arr.get(left) + arr.get(right)) < targetSum) {
-                left++;
-            } else if ((arr.get(left) + arr.get(right)) == targetSum) {
-                result.add(arr.get(left));
-                result.add(arr.get(right));
-                return result;
+        List<Integer> twoSumResult = new ArrayList<>();
+        for (int i=0; i<arr.size(); i++){
+            for (int j=i+1; j<arr.size(); j++){
+                if (arr.get(i) + arr.get(j) == targetSum){
+                    twoSumResult.add(arr.get(i));
+                    twoSumResult.add(arr.get(j));
+                }
             }
         }
-        return result;
+
+
+        return twoSumResult;
     }
     public static void main(String[] args) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -51,8 +48,9 @@ public class TwoSum2 {
     }
 
     private static List<Integer> readList(BufferedReader reader) throws IOException {
-        return  Arrays.stream(reader.readLine().split(" "))
-                .map(Integer :: parseInt)
+        return  Arrays.asList(reader.readLine().split(" "))
+                .stream()
+                .map(elem -> Integer.parseInt(elem))
                 .collect(Collectors.toList());
     }
 }

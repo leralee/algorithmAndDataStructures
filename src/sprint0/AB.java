@@ -1,3 +1,5 @@
+package sprint0;
+
 import java.util.Scanner;
 
 /**
