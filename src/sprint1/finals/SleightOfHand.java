@@ -1,10 +1,5 @@
-package sprint1;
-
+package sprint1.finals;//88064830
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author valeriali on {03.06.2023}
@@ -13,28 +8,23 @@ import java.util.stream.Collectors;
 public class SleightOfHand {
 
     public static int calculateScore(int k, char[][] array){
+        final int maxValue = 9;
         int n = 4;
         int score = 0;
-        HashMap<Character, Integer> scores = new HashMap<>();
-        for (int i = 1; i <= 9; i++) {
-            scores.put(Character.forDigit(i, 10), 0);
-        }
-
+        int[] scores = new int[maxValue+1];
 
         for (int i=0; i<n; i++){
             for (int j=0; j<n;j++){
                 if (array[i][j] == '.'){
                 } else {
-                    int newValue = scores.get(array[i][j])+1;
-                    scores.put(array[i][j], newValue);
+                    scores[array[i][j]-'0'] ++;
                 }
             }
         }
 
-        for (int i : scores.values()){
-            if (i<=k*2 && i!=0) score++;
+        for (int i : scores){
+            if (i<=k*2 && i!=0) score ++;
         }
-
 
         return score;
 

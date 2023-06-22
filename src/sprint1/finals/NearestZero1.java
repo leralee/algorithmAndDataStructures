@@ -1,4 +1,4 @@
-package sprint1;
+package sprint1.finals;
 
 import java.io.*;
 import java.util.ArrayList;

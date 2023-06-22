@@ -1,49 +1,44 @@
-package sprint1;
-
+package sprint1.finals;//88064781
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author valeriali on {02.06.2023}
- * @project algirithms
+ * @project algorithms
  */
 public class NearestZero2 {
 
-    public static int[] findNearestZero(String[] housesList, int housesCount){
+    public static int[] findNearestZero(String[] housesList, int housesCount) {
+
         int[] result = new int[housesCount];
-        int[] closerFromLeft = new int[housesCount];
-        int[] closerFromRight = new int[housesCount];
-
         int cv = housesCount;
-        for (int i = 0; i < housesCount; i++){
-            if (housesList[i].equals("0")){
-                cv = 0;
-            } else {
-                cv+=1;
-            }
-            closerFromLeft[i] = cv;
-        }
-
-        cv = housesCount;
-        for (int i = housesCount-1; i >= 0; i--){
-            if (housesList[i].equals("0")){
-                cv = 0;
-            } else {
-                cv+=1;
-            }
-            closerFromRight[i] = cv;
-        }
 
         for (int i = 0; i < housesCount; i++) {
-            result[i] = Math.min(closerFromLeft[i], closerFromRight[i]);
+            if (housesList[i].equals("0")) {
+                cv = 0;
+            } else {
+                cv += 1;
+            }
+            result[i] = cv;
         }
-        return result;
+        System.out.println(Arrays.toString(result));
 
+        cv = housesCount;
+        for (int i = housesCount - 1; i >= 0; i--) {
+            if (housesList[i].equals("0")) {
+                cv = 0;
+            } else {
+                cv += 1;
+            }
+            System.out.println(cv);
+            System.out.println(result[i]);
+            result[i] = Math.min(result[i], cv);
+        }
+
+
+        return result;
     }
+
 
 
     public static void main(String[] args) throws IOException {
