@@ -1,6 +1,6 @@
+package sprint2.LinkedQueue;
 
 import java.io.*;
-import java.util.LinkedList;
 
 /**
  * @author valeriali on {19.06.2023}

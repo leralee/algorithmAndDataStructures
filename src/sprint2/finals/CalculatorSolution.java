@@ -1,6 +1,8 @@
+package sprint2.finals;
+
 import java.util.Scanner;
 import java.util.Stack;
-// ID 88414885
+// ID 88466323
 /**
  * @author valeriali on {20.06.2023}
  * @project algorithms
@@ -36,36 +38,45 @@ import java.util.Stack;
 
 public class CalculatorSolution {
 
-    public static int evaluateExpression(String expression){
-        Stack<Integer> stack = new Stack<>();
+    public static int evaluateExpression(String expression) {
 
-        for (String symbol : expression.split("\\s+")){
-            if (isOperator(symbol)){
+        Stack<Integer> stack = new Stack<>();
+        StringBuilder currentNumber = new StringBuilder();
+
+        for (int i = 0; i < expression.length(); i++) {
+            char symbol = expression.charAt(i);
+
+            if (Character.isDigit(symbol) || (symbol == '-' && Character.isDigit(expression.charAt(i + 1)))) {
+                currentNumber.append(symbol);
+            } else if (symbol == ' ' && currentNumber.length() > 0) {
+                int number = Integer.parseInt(currentNumber.toString());
+                stack.push(number);
+                currentNumber.setLength(0);
+            } else if (isOperator(symbol)) {
                 int operand2 = stack.pop();
                 int operand1 = stack.pop();
                 int result = performOperation(symbol, operand1, operand2);
                 stack.push(result);
-            } else {
-                stack.push(Integer.parseInt(symbol));
             }
         }
+
         return stack.pop();
     }
 
-    public static boolean isOperator(String symbol){
-        return symbol.equals("+") || symbol.equals("-") || symbol.equals("*") || symbol.equals("/");
+    public static boolean isOperator(char symbol){
+        return symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/';
     }
 
-    public static int performOperation(String operator, int operand1, int operand2){
+    public static int performOperation(char operator, int operand1, int operand2){
         switch (operator) {
-            case "+":
+            case '+':
                 return operand1 + operand2;
-            case "-":
+            case '-':
                 return operand1 - operand2;
-            case "*":
+            case '*':
                 return operand1 * operand2;
-            case "/":
-                return (int) Math.floor((double) operand1 / operand2);
+            case '/':
+                return Math.floorDiv(operand1, operand2);
             default:
                 throw new IllegalArgumentException("Invalid operator: " + operator);
         }
@@ -75,7 +86,7 @@ public class CalculatorSolution {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String expression = sc.nextLine();
-        int result = evaluateExpression(expression);
+        int result = evaluateExpression(expression + " ");
         System.out.println(result);
     }
 }

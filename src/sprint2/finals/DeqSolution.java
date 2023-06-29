@@ -1,6 +1,9 @@
+package sprint2.finals;
+
 import java.io.*;
+import java.util.OptionalInt;
 import java.util.StringTokenizer;
-// ID 88399139
+// ID 88467046
 /**
  * @author valeriali on {20.06.2023}
  * @project algorithms
@@ -10,7 +13,7 @@ import java.util.StringTokenizer;
     Принцип работы алгоритма заключается в использовании кольцевого буфера (циклического массива) для реализации дека
     с максимальным размером, определенным числом.
 
-    При создании экземпляра класса Deq, мы инициализируем массив deq заданной вместимостью (capacity).
+    При создании экземпляра класса sprint2.finals.Deq, мы инициализируем массив deq заданной вместимостью (capacity).
 
     Также у нас есть переменные head и tail, которые указывают на начало и конец дека соответственно.
     Переменная size отслеживает текущее количество элементов в деке.
@@ -37,7 +40,9 @@ import java.util.StringTokenizer;
 
     Оценка временной сложности:
 
-    Время выполнения операций O(1) (константное время).
+    Временная сложность для каждой операции будет O(1),
+    и общая временная сложность для последовательности операций будет зависеть от количества операций,
+    то есть O(N), где N - общее количество операций.
 
     Оценка пространственной сложности:
 
@@ -61,43 +66,45 @@ class Deq {
         tail = 0;
     }
 
-    public void pushBack(String value){
-        if (size != capacity){
+    public boolean pushBack(String value){
+        if (size != capacity) {
             deq[tail] = value;
             tail = (tail + 1) % capacity;
             size++;
-        } else System.out.println("error");
+            return true;
+        } else return false;
     }
 
-    public void pushFront(String value){
+    public boolean pushFront(String value){
         if (size != capacity){
             head = (head - 1 + capacity) % capacity;
             deq[head] = value;
             size++;
-
-        } else System.out.println("error");
+            return true;
+        } else return false;
     }
 
-    public void popFront(){
+    public OptionalInt popFront(){
         if (size != 0){
-            System.out.println(deq[head]);
+            String value = deq[head];
             deq[head] = null;
             head = (head + 1) % capacity;
             size--;
+            return OptionalInt.of(Integer.parseInt(value));
         } else {
-            System.out.println("error");
+            return OptionalInt.empty();
         }
     }
 
-    public void popBack(){
+    public OptionalInt popBack(){
         if (size != 0){
-            tail = (tail - 1 + capacity) % capacity;
             String value = deq[tail];
             deq[tail] = null;
+            tail = (tail - 1 + capacity) % capacity;
             size--;
-            System.out.println(value);
+            return OptionalInt.of(Integer.parseInt(value));
         } else {
-            System.out.println("error");
+            return OptionalInt.empty();
         }
     }
 }
@@ -116,15 +123,28 @@ public class DeqSolution {
                 String command = tokenizer.nextToken();
                 if (command.startsWith("push_front")) {
                     String value = tokenizer.nextToken();
-                    deq.pushFront(value);
+                    if (!deq.pushFront(value)){
+                        System.out.println("error");
+                    }
                 } else if (command.startsWith("push_back")) {
                     String value = tokenizer.nextToken();
-                    deq.pushBack(value);
-
+                    if (!deq.pushBack(value)){
+                        System.out.println("error");
+                    }
                 } else if (command.startsWith("pop_front")) {
-                    deq.popFront();
+                    OptionalInt value = deq.popFront();
+                    if (value.isPresent()){
+                        System.out.println(value.getAsInt());
+                    } else {
+                        System.out.println("error");
+                    }
                 } else if (command.startsWith("pop_back")) {
-                    deq.popBack();
+                    OptionalInt value = deq.popBack();
+                    if (value.isPresent()){
+                        System.out.println(value.getAsInt());
+                    } else {
+                        System.out.println("error");
+                    }
                 }
             }
         }
