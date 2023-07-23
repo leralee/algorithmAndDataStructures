@@ -15,8 +15,7 @@ public class PolynomialHash {
 
         for (int i = n - 1; i >= 0; i--) {
             hash = (hash + ((int) s.charAt(i) * power) % m) % m;
-            long pa = power * a;
-            power = pa % m;
+            power = (power * a) % m;
         }
 
         return hash;

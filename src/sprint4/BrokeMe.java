@@ -49,11 +49,12 @@ public class BrokeMe {
 
 
     public static String generateRandomString() {
-        int length = 10; // Длина генерируемой строки
-        String characters = "abcdefghijklmnopqrstuvwxyz"; // Набор символов
-
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
+
+        int length = random.nextInt(8, 100) + 1; // Длина генерируемой строки
+        String characters = "abcdefghijklmnopqrstuvwxyz"; // Набор символов
+
 
         for (int i = 0; i < length; i++) {
             int index = random.nextInt(characters.length());
